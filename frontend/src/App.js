@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 import axios from "axios";
 import { useStore } from './zustand/useStore';
+import { usePersonStore } from './zustand/usePerson';
 
 function App(){
   const getApi = async () => {
@@ -16,10 +17,9 @@ function App(){
   const removeAllBears = useStore((state) => state.removeAllBears);
   const updateBears = useStore((state) => state.updateBears);
 
-  // 새로운 곰의 수를 업데이트하기
-  const handleUpdateBears = () => {
-    updateBears(12);
-  }
+  // 이름 받기
+  const firstName = usePersonStore((state) => state.firstName);
+  const updateFirstName = usePersonStore((state) => state.updateFirstName);
 
   return(
   <div>
@@ -27,7 +27,18 @@ function App(){
     <div>{bears} around heare!! </div>
     <button onClick={increasePopulation}>up!</button>
     <button onClick={removeAllBears}>reset</button>
-    <button onClick={handleUpdateBears}>updateBears</button>
+    <button onClick={() => updateBears(12)}>updateBears</button>
+
+    <div>
+      <label>
+        First Name:
+        <input
+          onChange={(e) => updateFirstName(e.target.value)}
+          value={firstName}
+        />
+      </label>
+      <p>Hello, <strong>{firstName}!!!</strong></p>
+    </div>
   </div>
   )
 };
