@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import axios from "axios";
 import { useStore } from './zustand/useStore';
 import { usePersonStore } from './zustand/usePerson';
+import { usePriceStore } from './zustand/usePriceStore';
 
 function App(){
   const getApi = async () => {
@@ -21,6 +22,10 @@ function App(){
   const firstName = usePersonStore((state) => state.firstName);
   const updateFirstName = usePersonStore((state) => state.updateFirstName);
 
+  // 가격 변경
+  const price = usePriceStore((state => state.price));
+  const updatePrice = usePriceStore((state) => state.updatePrice);
+ 
   return(
   <div>
     이건 프론트 페이지!! z
@@ -38,6 +43,17 @@ function App(){
         />
       </label>
       <p>Hello, <strong>{firstName}!!!</strong></p>
+    </div>
+
+    <div>
+      <label>
+        price: 
+        <input
+          onChange={(e) => updatePrice(e.target.value)}
+          value={price}
+        />
+      </label>
+      <p>{price}</p>
     </div>
   </div>
   )
