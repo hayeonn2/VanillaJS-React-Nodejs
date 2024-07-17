@@ -1,13 +1,14 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import { useStore } from './zustand/useStore';
-import { usePersonStore } from './zustand/usePerson';
-import { usePriceStore } from './zustand/usePriceStore';
+import { useStore } from "./zustand/useStore";
+import { usePersonStore } from "./zustand/usePerson";
+import { usePriceStore } from "./zustand/usePriceStore";
+import Hoisting from "./hoisting/Hositing";
 
-function App(){
+function App() {
   const getApi = async () => {
     axios.get("/api").then((res) => console.log(res.data));
-  }
+  };
 
   useEffect(() => {
     getApi();
@@ -23,40 +24,37 @@ function App(){
   const updateFirstName = usePersonStore((state) => state.updateFirstName);
 
   // 가격 변경
-  const price = usePriceStore((state => state.price));
+  const price = usePriceStore((state) => state.price);
   const updatePrice = usePriceStore((state) => state.updatePrice);
- 
-  return(
-  <div>
-    이건 프론트 페이지!! z
-    <div>{bears} around heare!! </div>
-    <button onClick={increasePopulation}>up!</button>
-    <button onClick={removeAllBears}>reset</button>
-    <button onClick={() => updateBears(12)}>updateBears</button>
 
+  return (
     <div>
-      <label>
-        First Name:
-        <input
-          onChange={(e) => updateFirstName(e.target.value)}
-          value={firstName}
-        />
-      </label>
-      <p>Hello, <strong>{firstName}!!!</strong></p>
+      이건 프론트 페이지!! z<div>{bears} around heare!! </div>
+      <button onClick={increasePopulation}>up!</button>
+      <button onClick={removeAllBears}>reset</button>
+      <button onClick={() => updateBears(12)}>updateBears</button>
+      <div>
+        <label>
+          First Name:
+          <input
+            onChange={(e) => updateFirstName(e.target.value)}
+            value={firstName}
+          />
+        </label>
+        <p>
+          Hello, <strong>{firstName}!!!</strong>
+        </p>
+      </div>
+      <div>
+        <label>
+          price:
+          <input onChange={(e) => updatePrice(e.target.value)} value={price} />
+        </label>
+        <p>{price}</p>
+      </div>
+      <Hoisting />
     </div>
-
-    <div>
-      <label>
-        price: 
-        <input
-          onChange={(e) => updatePrice(e.target.value)}
-          value={price}
-        />
-      </label>
-      <p>{price}</p>
-    </div>
-  </div>
-  )
-};
+  );
+}
 
 export default App;
