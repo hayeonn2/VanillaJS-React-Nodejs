@@ -5,7 +5,8 @@ import { usePersonStore } from "./zustand/usePerson";
 import { usePriceStore } from "./zustand/usePriceStore";
 import Hoisting from "./hoisting/Hositing";
 
-function App() {
+
+async function App() {
   const getApi = async () => {
     axios.get("/api").then((res) => console.log(res.data));
   };
@@ -26,6 +27,11 @@ function App() {
   // 가격 변경
   const price = usePriceStore((state) => state.price);
   const updatePrice = usePriceStore((state) => state.updatePrice);
+
+  // mock
+  const response = await fetch("https://example.com/user");
+  const user = await response.json();
+  console.log(user);
 
   return (
     <div>
@@ -52,9 +58,12 @@ function App() {
         </label>
         <p>{price}</p>
       </div>
-      <Hoisting />
+      {/* <Hoisting /> */}
+      
     </div>
   );
 }
+
+
 
 export default App;
